@@ -60,7 +60,7 @@ public class App
 
         File positiveFile = new File(repo, "positive_issues.csv");
         DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(positiveFile)));
-        out.writeChars("Title, Body, url, labels" + "\n");
+        out.writeChars("Title, Pull request, Body, url, labels" + "\n");
 
         for(GHIssue i : positiveIssues){
             writeLine(i, out);
@@ -69,7 +69,7 @@ public class App
 
         File negativeFile = new File(repo, "negative_issues.csv");
         out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(negativeFile)));
-        out.writeChars("Title, Body, url, labels" + "\n");
+        out.writeChars("Title, Pull request, Body, url, labels" + "\n");
 
         for(GHIssue i : negativeIssues){
             writeLine(i, out);
@@ -87,9 +87,9 @@ public class App
         out.write(theTitle.getBytes(StandardCharsets.UTF_8));
         out.write(",".getBytes(StandardCharsets.UTF_8));
 
-
-
-        //System.out.println(issue.getPullRequest());
+        String pullReq = String.valueOf(issue.getPullRequest());
+        out.write(pullReq.getBytes(StandardCharsets.UTF_8));
+        out.write(",".getBytes(StandardCharsets.UTF_8));
 
         //check if body contains "," so that it will parse correctly
         String theBody = issue.getBody().replaceAll(",","");

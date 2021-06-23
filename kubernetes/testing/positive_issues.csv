@@ -1,0 +1,12 @@
+Configuration environment variables are not read when configuration file is not present
+./ccx_notification_writer.go:227:2: unreachable code
+ccx_notification_writer.go:91:28
+ccx_notification_writer.go:84:28
+storage.go:391:19
+storage.go:339:19
+storage.go:391:50
+storage.go:339:50
+ccx_notification_writer.go:170:20
+ccx_notification_writer.go:151:20
+ccx_notification_writer.go:132:20
+ccx_notification_writer.go:112:20

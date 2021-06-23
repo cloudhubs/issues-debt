@@ -1,5 +1,5 @@
 //Noah Lambaria
-package edu.baylor.ecs.cloudhubs;
+package edu.baylor.ecs.cloudhubs.issue_collection;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.kohsuke.github.*;

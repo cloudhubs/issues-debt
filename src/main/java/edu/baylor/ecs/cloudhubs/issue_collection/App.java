@@ -24,7 +24,6 @@ public class App
 
         String org_name = "RedHatInsights", repo_name = "ccx-notification-writer";
 
-
         //Initialize the folders for org & repo
         File org = new File("/"+ org_name);
         org.mkdir();
@@ -49,11 +48,13 @@ public class App
             badLabel = false;
             //Iterate through all labels for every issue.
             for(GHLabel x : i.getLabels()){
+                //skip pull requests
                 if(List_of_allowed_labels.contains(x.getName())){ positive = true; }
                 if(List_of_disallowed_labels.contains(x.getName())){ badLabel = true; }
             }
 
-            if(positive && !badLabel){ positiveIssues.add(i); }
+                                        //filter out pull requests
+            if(positive && !badLabel && !i.isPullRequest()){ positiveIssues.add(i); }
             else{negativeIssues.add(i);}
 
         }

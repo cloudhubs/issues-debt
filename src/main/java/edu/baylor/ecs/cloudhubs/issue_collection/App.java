@@ -45,10 +45,11 @@ public class App
         boolean positive = false, badLabel = false;
 
         for(GHIssue i: allIssues){
+            System.out.println(i);
             positive = false;
             badLabel = false;
             //Iterate through all labels for every issue.
-            for(GHLabel x : i.getLabels()){
+            for(GHLabel x : i.getLabels()) {
                 if(List_of_allowed_labels.contains(x.getName())){ positive = true; }
                 if(List_of_disallowed_labels.contains(x.getName())){ badLabel = true; }
             }

@@ -105,7 +105,11 @@ public class App
         out.write(",".getBytes(StandardCharsets.UTF_8));
 
         //check if body contains "," so that it will parse correctly
-        String theBody = issue.getBody().replaceAll(",","");
+        String theBody="";
+
+        if (issue.getBody() != null){
+            theBody = issue.getBody().replaceAll(",","");
+        }
         theBody = theBody.replaceAll("[\\t\\n\\r]+"," ");
 
         out.write(theBody.getBytes(StandardCharsets.UTF_8));

@@ -22,7 +22,7 @@ public class App
         GitHub github = GitHubBuilder.fromPropertyFile().build();
 
 
-        String org_name = "RedHatInsights", repo_name = "ccx-notification-writer";
+        String org_name = "zulip", repo_name = "zulip";
 
         //Initialize the folders for org & repo
         File org = new File("/"+ org_name);
@@ -31,8 +31,19 @@ public class App
         repo.mkdirs();
 
 
-        ArrayList<String> List_of_allowed_labels= new ArrayList<>(Arrays.asList("bugs","bug","need_fix"));
-        ArrayList<String> List_of_disallowed_labels= new ArrayList<>(Arrays.asList("Documentation","enhancement"));
+        ArrayList<String> List_of_allowed_labels= new ArrayList<>(Arrays.asList(
+                "area: refactoring","area: support","area: testing-coverage","area: testing-infrastructure",
+                "bug","difficult","duplicate","has conflicts","rust community request","Issues of interest to the Rust community"
+        ));
+
+        ArrayList<String> List_of_disallowed_labels= new ArrayList<>(Arrays.asList(
+                "area: documentation (api and integrations)","area: documentation (developer)",
+                "area: documentation (production)","area: documentation (user)","area: i18n",
+                "area: keyboard UI","area: left-sidebar","area: portico","area: production installer",
+                "area: provision","area: settings UI","area: tooling","design","invalid","needs discussion",
+                "new feature","A proposed new feature for the product","UX","UX improvements to an existing workflow."
+        ));
+
 
         //The commented out code is for organizations, and the second line is for regular repositories
         //List<GHIssue> allIssues = github.getOrganization(org_name).getRepository(repo_name).getIssues(GHIssueState.ALL);
@@ -42,6 +53,7 @@ public class App
         List<GHIssue> positiveIssues = new ArrayList<>();
         List<GHIssue> negativeIssues = new ArrayList<>();
         boolean positive = false, badLabel = false;
+
 
         for(GHIssue i: allIssues){
             positive = false;

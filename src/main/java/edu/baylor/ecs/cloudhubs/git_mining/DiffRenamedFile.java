@@ -7,10 +7,6 @@ package edu.baylor.ecs.cloudhubs.git_mining;
  * website : https://maruftuhin.com
  */
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -29,6 +25,10 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 // Simple example that shows how to diff a single file between two commits when
 // the file may have been renamed.
 public class DiffRenamedFile {
@@ -43,10 +43,10 @@ public class DiffRenamedFile {
                 .build();
         ObjectId oldHead = repository.resolve("HEAD^^^^{tree}");
         ObjectId head = repository.resolve("HEAD^{tree}");
-            runDiff(repository,
-                    "771fb50552bca24b0a2764e3870e05917b0bbe6e",
-                    "00f5c665cc69add3c85726b5d9ae698aa734dba6",
-                    "README.md");
+        runDiff(repository,
+                "45d4c1467a8d367367889d1be6decc2007a7eddb^",
+                "45d4c1467a8d367367889d1be6decc2007a7eddb",
+                "README.md");
 
 //            // try the reverse as well
 //            runDiff(repository,
@@ -69,15 +69,18 @@ public class DiffRenamedFile {
                 oldCommit,
                 newCommit,
                 path);
+        System.out.println(diff.getScore());
 
         // Display the diff
         System.out.println("Showing diff of " + path);
+
         try (DiffFormatter formatter = new DiffFormatter(System.out)) {
             formatter.setRepository(repo);
 //            formatter.setContext(0);
             //noinspection ConstantConditions
             formatter.format(diff);
         }
+
     }
 
     private static AbstractTreeIterator prepareTreeParser(Repository repository, String objectId) throws IOException {
@@ -98,8 +101,9 @@ public class DiffRenamedFile {
         }
     }
 
-    private static @NonNull DiffEntry diffFile(Repository repo, String oldCommit,
-                                               String newCommit, String path) throws IOException, GitAPIException {
+    private static @NonNull
+    DiffEntry diffFile(Repository repo, String oldCommit,
+                       String newCommit, String path) throws IOException, GitAPIException {
         Config config = new Config();
         config.setBoolean("diff", null, "renames", true);
         DiffConfig diffConfig = config.get(DiffConfig.KEY);
@@ -107,12 +111,14 @@ public class DiffRenamedFile {
             List<DiffEntry> diffList = git.diff().
                     setOldTree(prepareTreeParser(repo, oldCommit)).
                     setNewTree(prepareTreeParser(repo, newCommit)).
-                    setPathFilter(FollowFilter.create(path, diffConfig)).
-                    call();
+                    setPathFilter(FollowFilter.create(path, diffConfig)).call();
             if (diffList.size() == 0)
                 return null;
             if (diffList.size() > 1)
                 throw new RuntimeException("invalid diff");
+            for (DiffEntry entry : diffList) {
+                System.out.println(entry.getTreeFilterMarks());
+            }
             return diffList.get(0);
         }
     }

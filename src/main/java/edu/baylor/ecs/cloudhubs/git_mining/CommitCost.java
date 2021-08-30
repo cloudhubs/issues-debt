@@ -169,29 +169,33 @@ public class CommitCost {
             diffFormatter.setContext(0);
             FileHeader header = diffFormatter.toFileHeader(entry);
             List<? extends HunkHeader> hunks = header.getHunks();
-            System.out.println(".............. Old path " + header.getOldPath());
-            System.out.println(".............. New path " + header.getNewPath());
+            System.out.println("Old path " + header.getOldPath());
+            System.out.println("New path " + header.getNewPath());
 
             // A means latest commit, B is older commit
             for (HunkHeader hunkHeader : hunks) {
                 for (Edit edit : hunkHeader.toEditList()) {
-                    System.out.println("A: " + edit.getBeginA() + " " + edit.getEndA());
-                    System.out.println("B: " + edit.getBeginB() + " " + edit.getEndB());
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("A: Addition of Code block: " + edit.getBeginA() + " " + edit.getEndA());
+                    System.out.println("B: Deletion of Code block: " + edit.getBeginB() + " " + edit.getEndB());
                     long t_old = 0;
                     long t_new = 0;
 
-
-                    for (int i = edit.getBeginB(); i < edit.getEndB(); i++) {
-//                        System.out.println(i+" "+old_blames.get(header.getOldPath()).getResultContents().getString(i));
-                        System.out.println(i + " " + old_blames.get(header.getOldPath()).getSourceCommit(i).getCommitterIdent());
-                        t_old += old_blames.get(header.getOldPath()).getSourceCommit(i).getCommitTime();
-                    }
                     for (int i = edit.getBeginA(); i < edit.getEndA(); i++) {
 //                        System.out.println(i+" "+new_blames.get(header.getNewPath()).getResultContents().getString(i));
 
-                        System.out.println(i + " " + new_blames.get(header.getNewPath()).getSourceCommit(i).getCommitterIdent());
+                        System.out.println(i+1 + " " + new_blames.get(header.getNewPath()).getSourceCommit(i).getCommitterIdent());
                         t_new += new_blames.get(header.getNewPath()).getSourceCommit(i).getCommitTime();
                     }
+                    System.out.println();
+
+                    for (int i = edit.getBeginB(); i < edit.getEndB(); i++) {
+//                        System.out.println(i+" "+old_blames.get(header.getOldPath()).getResultContents().getString(i));
+                        System.out.println(i+1 + " " + old_blames.get(header.getOldPath()).getSourceCommit(i).getCommitterIdent());
+                        t_old += old_blames.get(header.getOldPath()).getSourceCommit(i).getCommitTime();
+                    }
+
+
                     if (t_old == 0) {
                         System.out.println("old <>" + old_blames.get(header.getOldPath()).getSourceCommit(edit.getBeginB()).getCommitterIdent());
 
@@ -212,12 +216,14 @@ public class CommitCost {
 
                     int affected_lines = edit.getEndB() - edit.getBeginB() + edit.getEndA() - edit.getBeginA();
                     total_affected_line += affected_lines;
-                    System.out.println("average time: " + ((t_new - t_old) * affected_lines) / (60 * 60 * 24));
+                    System.out.println("Average time: " + ((t_new - t_old) * affected_lines) / (60 * 60 * 24));
+                    System.out.println("Affected lines: " + affected_lines);
+
 
                     total_time += (t_new - t_old) * affected_lines;
+                    System.out.println();
                     System.out.println("total time: " + total_time/ (60 * 60 * 24));
                     System.out.println("total lines: " + total_affected_line);
-                    System.out.println("Affected lines: " + affected_lines);
                 }
             }
 

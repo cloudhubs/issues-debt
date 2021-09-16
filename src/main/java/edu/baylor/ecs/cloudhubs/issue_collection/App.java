@@ -22,7 +22,7 @@ public class App
         GitHub github = GitHubBuilder.fromPropertyFile().build();
 
 
-        String org_name = "zulip", repo_name = "zulip";
+        String org_name = "keras-team", repo_name = "keras";
 
         //Initialize the folders for org & repo
         File org = new File("/"+ org_name);
@@ -32,16 +32,11 @@ public class App
 
 
         ArrayList<String> List_of_allowed_labels= new ArrayList<>(Arrays.asList(
-                "area: refactoring","area: support","area: testing-coverage","area: testing-infrastructure",
-                "bug","difficult","duplicate","has conflicts","rust community request","Issues of interest to the Rust community"
+                "type:bug/performance"
         ));
 
         ArrayList<String> List_of_disallowed_labels= new ArrayList<>(Arrays.asList(
-                "area: documentation (api and integrations)","area: documentation (developer)",
-                "area: documentation (production)","area: documentation (user)","area: i18n",
-                "area: keyboard UI","area: left-sidebar","area: portico","area: production installer",
-                "area: provision","area: settings UI","area: tooling","design","invalid","needs discussion",
-                "new feature","A proposed new feature for the product","UX","UX improvements to an existing workflow."
+                "type:feature","type:docs","wontfix"
         ));
 
 

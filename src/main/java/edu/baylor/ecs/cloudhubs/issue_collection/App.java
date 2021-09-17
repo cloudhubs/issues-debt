@@ -43,7 +43,9 @@ public class App
         //The commented out code is for organizations, and the second line is for regular repositories
         //List<GHIssue> allIssues = github.getOrganization(org_name).getRepository(repo_name).getIssues(GHIssueState.ALL);
         //List<GHIssue> allIssues = github.getRepository("Richard-Hutch/BearMarket").getIssues(GHIssueState.ALL);
+        System.out.println("Collecting Issues for: "+org_name+"/"+repo_name);
         List<GHIssue> allIssues = github.getRepository(org_name + "/" + repo_name).getIssues(GHIssueState.ALL);
+        System.out.println("Issues: "+ allIssues);
 
         List<GHIssue> positiveIssues = new ArrayList<>();
         List<GHIssue> negativeIssues = new ArrayList<>();

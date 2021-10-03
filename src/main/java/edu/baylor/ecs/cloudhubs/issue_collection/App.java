@@ -22,7 +22,7 @@ public class App
         GitHub github = GitHubBuilder.fromPropertyFile().build();
 
 
-        String org_name = "pandas-dev", repo_name = "pandas";
+        String org_name = "scikit-learn", repo_name = "scikit-learn";
 
         //Initialize the folders for org & repo
         File org = new File("/"+ org_name);
@@ -32,11 +32,11 @@ public class App
 
 
         ArrayList<String> List_of_allowed_labels= new ArrayList<>(Arrays.asList(
-                "Bug","Regression"
+                "Bug","Regression","Bug: triage"
         ));
 
         ArrayList<String> List_of_disallowed_labels= new ArrayList<>(Arrays.asList(
-                "Docs","Performance","Enhancement","Deprecate"
+               "New Feature", "Enhancement","Documentation","Build / CI"
         ));
 
 

@@ -22,7 +22,7 @@ public class App
         GitHub github = GitHubBuilder.fromPropertyFile().build();
 
 
-        String org_name = "keras-team", repo_name = "keras";
+        String org_name = "pandas-dev", repo_name = "pandas";
 
         //Initialize the folders for org & repo
         File org = new File("/"+ org_name);
@@ -32,11 +32,11 @@ public class App
 
 
         ArrayList<String> List_of_allowed_labels= new ArrayList<>(Arrays.asList(
-                "type:bug/performance"
+                "Bug","Regression"
         ));
 
         ArrayList<String> List_of_disallowed_labels= new ArrayList<>(Arrays.asList(
-                "type:feature","type:docs","wontfix"
+                "Docs","Performance","Enhancement","Deprecate"
         ));
 
 
